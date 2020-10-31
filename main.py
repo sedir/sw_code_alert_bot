@@ -33,7 +33,7 @@ def find_nodes():
 
 
 if __name__ == "__main__":
-    schedule.every().minute.do(find_noticias)
+    schedule.every().minute.do(find_nodes)
     while True:
         schedule.run_pending()
         sleep(1)
