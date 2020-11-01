@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  alerter:
+    command: python main.py
+    image: sw-code-alert-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+  bot:
+    image: sw-code-alert-bot
+    command: python telegram.py
+    depends_on:
+      - alerter
+      - db
+  db:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=sw_code_alert_bot
+      - POSTGRES_DB=sw_code_alert_bot
+volumes:
+  db_data:
+
